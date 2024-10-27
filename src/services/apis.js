@@ -1,5 +1,5 @@
-const BASE_URL = process.env.REACT_APP_BASE_URL   //deployed backend base url
-
+//const BASE_URL = process.env.REACT_APP_BASE_URL   //deployed backend base url
+const BASE_URL = "http://localhost:4000/api/v1"
 
 // AUTH ENDPOINTS
 export const endpoints = {
@@ -39,8 +39,7 @@ export const courseEndpoints = {
   DELETE_SECTION_API: BASE_URL + "/course/deleteSection",
   DELETE_SUBSECTION_API: BASE_URL + "/course/deleteSubSection",
   DELETE_COURSE_API: BASE_URL + "/course/deleteCourse",
-  GET_FULL_COURSE_DETAILS_AUTHENTICATED:
-    BASE_URL + "/course/getFullCourseDetails",
+  GET_FULL_COURSE_DETAILS_AUTHENTICATED:BASE_URL + "/course/getFullCourseDetails",
   LECTURE_COMPLETION_API: BASE_URL + "/course/updateCourseProgress",
   CREATE_RATING_API: BASE_URL + "/course/createRating",
 }
@@ -53,6 +52,7 @@ export const ratingsEndpoints = {
 // CATAGORIES API
 export const categories = {
   CATEGORIES_API: BASE_URL + "/course/showAllCategories",
+  COURSE_CREATE_CATEGORIES_API: BASE_URL + "/course/createCategories",
 }
 
 // CATALOG PAGE DATA

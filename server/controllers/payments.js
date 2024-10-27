@@ -79,7 +79,11 @@ exports.verifyPayment = async (req, res) => {
   const courses = req.body?.courses
 
   const userId = req.user.id
-
+  console.log("1",razorpay_order_id)
+  console.log("2",razorpay_payment_id)
+  console.log("3",razorpay_signature)
+  console.log("4",courses)
+  console.log("5",userId)
   if (
     !razorpay_order_id ||
     !razorpay_payment_id ||
@@ -93,7 +97,7 @@ exports.verifyPayment = async (req, res) => {
   let body = razorpay_order_id + "|" + razorpay_payment_id
 
   const expectedSignature = crypto
-    .createHmac("sha256", process.env.RAZORPAY_SECRET)
+    .createHmac("sha256", "o7TBIxOogcPsNQa9pTzsAoYf") // o7TBIxOogcPsNQa9pTzsAoYf is RAZOROAY_SECRET
     .update(body.toString())
     .digest("hex")
 

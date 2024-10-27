@@ -9,6 +9,7 @@ import {
   addCourseDetails,
   editCourseDetails,
   fetchCourseCategories,
+  createCategory,
 } from "../../../../../services/operations/courseDetailsAPI"
 import { setCourse, setStep } from "../../../../../slices/courseSlice"
 import { COURSE_STATUS } from "../../../../../utils/constants"

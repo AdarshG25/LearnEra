@@ -54,6 +54,8 @@ const coursesSchema = new mongoose.Schema({
     enum: ["Draft", "Published"],
   },
   createdAt: { type: Date, default: Date.now },
+  duration: { type: Number }, // Duration in seconds, for example
+
 })
 
 // Export the Courses model

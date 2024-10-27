@@ -418,27 +418,66 @@ exports.getFullCourseDetails = async (req, res) => {
 exports.getInstructorCourses = async (req, res) => {
   try {
     // Get the instructor ID from the authenticated user or request body
-    const instructorId = req.user.id
+    const instructorId = req.user.id;
 
-    // Find all courses belonging to the instructor
-    const instructorCourses = await Course.find({
-      instructor: instructorId,
-    }).sort({ createdAt: -1 })
+    // Find all courses belonging to the instructor and populate courseContent and subSection
+    const instructorCourses = await Course.find({ instructor: instructorId })
+      .populate({
+        path: 'courseContent',
+        populate: {
+          path: 'subSection', // Populate subSection within courseContent
+        },
+      })
+      .sort({ createdAt: -1 });
 
-    // Return the instructor's courses
+    //console.log("Instructor Courses : ", JSON.stringify(instructorCourses, null, 2));
+
+    // Initialize an array to hold courses with their total duration
+    const coursesWithDuration = [];
+
+    // Iterate through the courses to calculate their total duration
+    for (const course of instructorCourses) {
+      let totalDurationInSeconds = 0;
+
+      // Assuming courseContent holds the course content details
+      if (course.courseContent) {
+        course.courseContent.forEach((content) => {
+          if (content.subSection) {
+            // Ensure content.subSection is an array
+            content.subSection.forEach((subSection) => {
+              // Ensure that timeDuration is valid
+              const timeDurationInSeconds = parseInt(subSection.timeDuration, 10);
+              if (!isNaN(timeDurationInSeconds)) {
+                totalDurationInSeconds += timeDurationInSeconds;
+              }
+            });
+          }
+        });
+      }
+
+      // Convert total seconds to a readable format
+      const totalDuration = convertSecondsToDuration(totalDurationInSeconds);
+      coursesWithDuration.push({
+        ...course.toObject(), // Convert Mongoose document to plain object
+        totalDuration,
+      });
+    }
+
+    // Return the instructor's courses with their total durations
     res.status(200).json({
       success: true,
-      data: instructorCourses,
-    })
+      data: coursesWithDuration,
+    });
   } catch (error) {
-    console.error(error)
+    console.error(error);
     res.status(500).json({
       success: false,
       message: "Failed to retrieve instructor courses",
       error: error.message,
-    })
+    });
   }
-}
+};
+
 // Delete the Course
 exports.deleteCourse = async (req, res) => {
   try {

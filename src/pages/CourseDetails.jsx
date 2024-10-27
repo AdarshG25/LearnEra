@@ -252,6 +252,7 @@ function CourseDetails() {
                 />
                 <p className="text-lg">{`${instructor.firstName} ${instructor.lastName}`}</p>
               </div>
+              
               <p className="text-richblack-50">
                 {instructor?.additionalDetails?.about}
               </p>

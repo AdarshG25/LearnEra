@@ -3,7 +3,7 @@ import { Table, Tbody, Td, Th, Thead, Tr } from "react-super-responsive-table"
 
 import { setCourse, setEditCourse } from "../../../../slices/courseSlice"
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import { FaCheck } from "react-icons/fa"
 import { FiEdit2 } from "react-icons/fi"
 import { HiClock } from "react-icons/hi"
@@ -14,11 +14,13 @@ import { formatDate } from "../../../../services/formatDate"
 import {
   deleteCourse,
   fetchInstructorCourses,
+  fetchCourseDetails
 } from "../../../../services/operations/courseDetailsAPI"
 import { COURSE_STATUS } from "../../../../utils/constants"
 import ConfirmationModal from "../../../Common/ConfirmationModal"
 
 export default function CoursesTable({ courses, setCourses }) {
+  console.log("courses : ",courses)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { token } = useSelector((state) => state.auth)
@@ -110,7 +112,7 @@ export default function CoursesTable({ courses, setCourses }) {
                   </div>
                 </Td>
                 <Td className="text-sm font-medium text-richblack-100">
-                  2hr 30min
+                  {course.totalDuration}
                 </Td>
                 <Td className="text-sm font-medium text-richblack-100">
                   ₹{course.price}

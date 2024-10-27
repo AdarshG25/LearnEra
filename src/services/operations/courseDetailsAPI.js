@@ -3,7 +3,7 @@ import { toast } from "react-hot-toast"
 import { updateCompletedLectures } from "../../slices/viewCourseSlice"
 // import { setLoading } from "../../slices/profileSlice";
 import { apiConnector } from "../apiConnector"
-import { courseEndpoints } from "../apis"
+import { categories, courseEndpoints } from "../apis"
 
 const {
   COURSE_DETAILS_API,
@@ -33,6 +33,7 @@ export const getAllCourses = async () => {
       throw new Error("Could Not Fetch Course Categories")
     }
     result = response?.data?.data
+    console.log("get all courses api response",result)
   } catch (error) {
     console.log("GET_ALL_COURSE_API API ERROR............", error)
     toast.error(error.message)
@@ -81,6 +82,22 @@ export const fetchCourseCategories = async () => {
   }
   return result
 }
+
+// export const createCategory = async () => {
+//   try{
+//     const response = await apiConnector("POST", COURSE_CREATE_CATEGORIES_API)
+//     console.log("COURSE_CREATE_CATEGORIES_API API RESPONSE............", response)
+//     if(!response)
+//     {
+//       throw new Error("Could Not Create Category")
+//     }
+//   }
+//   catch(error)
+//   {
+//     console.log("COURSE_CREATE_CATEGORIES_API error..................",error)
+//   }
+  
+// }
 
 // add the course details
 export const addCourseDetails = async (data, token) => {
